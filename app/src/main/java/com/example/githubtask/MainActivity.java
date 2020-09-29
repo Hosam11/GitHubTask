@@ -26,7 +26,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.githubtask.HelperClass.ACESS_TOKEN;
+import static com.example.githubtask.HelperClass.ACCESS_TOKEN;
 import static com.example.githubtask.HelperClass.API_URL;
 import static com.example.githubtask.HelperClass.TAG;
 
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Call<List<GitHubRepoModel>> repoModelCall = gitHubAPIInterface.getRepsPages(page,
-                limit, ACESS_TOKEN);
+                limit, ACCESS_TOKEN);
 
         repoModelCall.enqueue(new Callback<List<GitHubRepoModel>>() {
 

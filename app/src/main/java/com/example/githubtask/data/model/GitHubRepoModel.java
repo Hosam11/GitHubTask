@@ -2,36 +2,59 @@ package com.example.githubtask.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
 public class GitHubRepoModel {
 
     @SerializedName("name")
     String repoName;
     @SerializedName("description")
     String repoDesc;
-    @SerializedName("full_name")
-    String repoOwnerName;
+
+    boolean fork;
+    @SerializedName("html_url")
+    String repoURL;
+
+    @SerializedName("owner")
+    OwnerModel ownerModel;
+
+    public OwnerModel getOwnerModel() {
+        return ownerModel;
+    }
+
+    public String getRepoURL() {
+        return repoURL;
+    }
 
     public String getRepoName() {
         return repoName;
     }
 
-    public void setRepoName(String repoName) {
-        this.repoName = repoName;
-    }
 
     public String getRepoDesc() {
         return repoDesc;
     }
 
-    public void setRepoDesc(String repoDesc) {
-        this.repoDesc = repoDesc;
+
+
+
+    public boolean isFork() {
+        return fork;
     }
 
-    public String getRepoOwnerName() {
-        return repoOwnerName;
+
+    public class OwnerModel {
+        // FixME "Hint" i CAN NOT find the username of owner so i used login instead
+        String login;
+        @SerializedName("html_url")
+        String ownerURL;
+
+        public String getLogin() {
+            return login;
+        }
+
+        public String getOwnerURL() {
+            return ownerURL;
+        }
     }
 
-    public void setRepoOwnerName(String repoOwnerName) {
-        this.repoOwnerName = repoOwnerName;
-    }
 }
