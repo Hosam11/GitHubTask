@@ -15,12 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.githubtask.data.StoreData;
 import com.example.githubtask.data.model.GitHubRepoModel;
 
 import java.util.List;
-
-import static com.example.githubtask.HelperClass.TAG;
 
 public class GitHubAdapter extends RecyclerView.Adapter<GitHubAdapter.GitHubViewHolder> {
 
@@ -34,21 +31,13 @@ public class GitHubAdapter extends RecyclerView.Adapter<GitHubAdapter.GitHubView
     public GitHubAdapter(Context context, List<GitHubRepoModel> gitHubRepoList) {
         this.context = context;
         this.gitHubRepoList = gitHubRepoList;
-
     }
 
     public void setGitHubList(List<GitHubRepoModel> gitHubRepoList) {
         this.gitHubRepoList.addAll(gitHubRepoList);
         notifyDataSetChanged();
-        Log.i(HelperClass.TAG, "##GitHubAdapter## -- setGitHubList() -- this.listSize() >> "
+        Log.i(HelperClass.TAG, "## GitHubAdapter ## -- setGitHubList() -- this.listSize() >> "
                 + this.gitHubRepoList.size());
-        /*StoreData storeData = new StoreData();
-
-        storeData.saveListRepos(this.gitHubRepoList, context);
-
-        List<GitHubRepoModel> list = storeData.getSavedRepos(context);
-        Log.i(TAG, "##GitHubAdapter## -- setGitHubList() -- listSize FromSharedPrefs>> "
-                + list.size());*/
     }
 
     @NonNull
@@ -62,34 +51,29 @@ public class GitHubAdapter extends RecyclerView.Adapter<GitHubAdapter.GitHubView
 
     @Override
     public void onBindViewHolder(@NonNull GitHubViewHolder holder, int position) {
-
         gitHubRepo = gitHubRepoList.get(position);
         owner = gitHubRepo.getOwnerModel();
         holder.repoName.setText(gitHubRepo.getRepoName());
         holder.repoDesc.setText(gitHubRepo.getRepoDesc());
         holder.repoOwnerName.setText(owner.getLogin());
+        // default is light green
         if (gitHubRepo.isFork()) {
             holder.linearLayout.setBackgroundColor(Color.WHITE);
         }
-
         holder.linearLayout.setOnLongClickListener(view -> {
             showAlert();
             return true;
         });
-
     }
 
     public void showAlert() {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Where to Go? ");
         builder.setMessage("choose which url you want to open..");
 
         builder.setNegativeButton("Owner", (dialogInterface, i) -> {
-            Log.i(HelperClass.TAG, "ShowAlert: " +
+            Log.i(HelperClass.TAG, "## GitHubAdapter ## ShowAlert() -- " +
                     "owner url >> " + owner.getOwnerURL());
-
-            //    String url = "http://www.stackoverflow.com";
             goToUrl(owner.getOwnerURL());
 
         });
@@ -102,6 +86,11 @@ public class GitHubAdapter extends RecyclerView.Adapter<GitHubAdapter.GitHubView
         builder.show();
     }
 
+    /**
+     * open a browser with url based on user selection
+     *
+     * @param url
+     */
     private void goToUrl(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
@@ -120,15 +109,12 @@ public class GitHubAdapter extends RecyclerView.Adapter<GitHubAdapter.GitHubView
         TextView repoOwnerName;
         LinearLayout linearLayout;
 
-
         public GitHubViewHolder(@NonNull View itemView) {
             super(itemView);
             repoName = itemView.findViewById(R.id.tv_repo_name);
             repoDesc = itemView.findViewById(R.id.tv_repo_desc);
             repoOwnerName = itemView.findViewById(R.id.tv_repo_owner_name);
             linearLayout = itemView.findViewById(R.id.linear_layout_row);
-
-
         }
     }
 }

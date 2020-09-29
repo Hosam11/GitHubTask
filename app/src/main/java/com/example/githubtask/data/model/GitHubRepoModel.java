@@ -9,13 +9,12 @@ public class GitHubRepoModel {
     String repoName;
     @SerializedName("description")
     String repoDesc;
-
-    boolean fork;
     @SerializedName("html_url")
     String repoURL;
-
     @SerializedName("owner")
     OwnerModel ownerModel;
+
+    boolean fork;
 
     public OwnerModel getOwnerModel() {
         return ownerModel;
@@ -29,20 +28,15 @@ public class GitHubRepoModel {
         return repoName;
     }
 
-
     public String getRepoDesc() {
         return repoDesc;
     }
-
-
-
 
     public boolean isFork() {
         return fork;
     }
 
-
-    public class OwnerModel {
+    public static class OwnerModel {
         // FixME "Hint" i CAN NOT find the username of owner so i used login instead
         String login;
         @SerializedName("html_url")
