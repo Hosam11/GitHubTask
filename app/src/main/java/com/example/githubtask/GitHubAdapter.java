@@ -1,7 +1,6 @@
 package com.example.githubtask;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -16,9 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.githubtask.data.StoreData;
 import com.example.githubtask.data.model.GitHubRepoModel;
 
 import java.util.List;
+
+import static com.example.githubtask.HelperClass.TAG;
 
 public class GitHubAdapter extends RecyclerView.Adapter<GitHubAdapter.GitHubViewHolder> {
 
@@ -32,13 +34,21 @@ public class GitHubAdapter extends RecyclerView.Adapter<GitHubAdapter.GitHubView
     public GitHubAdapter(Context context, List<GitHubRepoModel> gitHubRepoList) {
         this.context = context;
         this.gitHubRepoList = gitHubRepoList;
+
     }
 
     public void setGitHubList(List<GitHubRepoModel> gitHubRepoList) {
         this.gitHubRepoList.addAll(gitHubRepoList);
-//        this.gitHubRepoList = gitHubRepoList;
-        Log.i(HelperClass.TAG, "GitHubAdapter >> setGitHubList: listSize() >> "
-                + gitHubRepoList.size());
+        notifyDataSetChanged();
+        Log.i(HelperClass.TAG, "##GitHubAdapter## -- setGitHubList() -- this.listSize() >> "
+                + this.gitHubRepoList.size());
+        /*StoreData storeData = new StoreData();
+
+        storeData.saveListRepos(this.gitHubRepoList, context);
+
+        List<GitHubRepoModel> list = storeData.getSavedRepos(context);
+        Log.i(TAG, "##GitHubAdapter## -- setGitHubList() -- listSize FromSharedPrefs>> "
+                + list.size());*/
     }
 
     @NonNull
@@ -79,8 +89,8 @@ public class GitHubAdapter extends RecyclerView.Adapter<GitHubAdapter.GitHubView
             Log.i(HelperClass.TAG, "ShowAlert: " +
                     "owner url >> " + owner.getOwnerURL());
 
-        //    String url = "http://www.stackoverflow.com";
-            goToUrl( owner.getOwnerURL());
+            //    String url = "http://www.stackoverflow.com";
+            goToUrl(owner.getOwnerURL());
 
         });
         builder.setPositiveButton("Repo", (dialogInterface, i) -> {
